@@ -1,8 +1,9 @@
 import { defineConfig, type Plugin } from "vite"
-import react from "@vitejs/plugin-react"
-import { tanstackRouter } from "@tanstack/router-plugin/vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import viteReact from "@vitejs/plugin-react"
+import tailwindcss from "@tailwindcss/vite"
+import tsconfigPaths from "vite-tsconfig-paths"
 import { nitro } from "nitro/vite"
-import path from "node:path"
 import { createRequire } from "node:module"
 
 const require = createRequire(import.meta.url)
@@ -32,33 +33,15 @@ export default defineConfig(async () => {
 
   return {
     plugins: [
-      nitro({
-        services: {
-          ssr: {
-            entry: "./src/entry-server.tsx",
-          },
-        },
-      }),
-      tanstackRouter({ target: "react", autoCodeSplitting: true }),
+      nitro({ scanDirs: ["."] }),
+      tsconfigPaths({ projects: ["./tsconfig.json"] }),
+      tailwindcss(),
       ...(mdx ? [mdx] : []),
-      react(),
+      tanstackStart(),
+      viteReact(),
     ],
-    resolve: {
-      alias: {
-        "@": path.resolve(import.meta.dirname, "./src"),
-      },
-    },
     ssr: {
       noExternal: ["@thesandybridge/ui", "@thesandybridge/themes"],
-    },
-    environments: {
-      client: {
-        build: {
-          rollupOptions: {
-            input: "./src/entry-client.tsx",
-          },
-        },
-      },
     },
   }
 })
