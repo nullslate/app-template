@@ -1,0 +1,20 @@
+/target
+
+# dependencies
+node_modules
+
+# env files
+.env
+.env*.local
+
+# build output
+.nitro/
+.output/
+/build
+
+# misc
+.DS_Store
+*.pem
+bun.lock
+package-lock.json
+*.tsbuildinfo
