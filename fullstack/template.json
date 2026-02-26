@@ -1,0 +1,20 @@
+{
+  "name": "nullslate-fullstack-template",
+  "version": "1.0.0",
+  "variables": {
+    "project_name": {
+      "description": "Name of the project",
+      "required": true
+    }
+  },
+  "features": {
+    "docs": {
+      "description": "Include MDX documentation system",
+      "default": false
+    },
+    "auth": {
+      "description": "Include Auth.js authentication (frontend)",
+      "default": true
+    }
+  }
+}
