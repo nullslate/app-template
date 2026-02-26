@@ -6,8 +6,8 @@ import { docsMDXComponents } from "@/lib/mdx-components"
 
 export const Route = createFileRoute("/docs/$slug")({
   component: DocPage,
-  loader: ({ params }) => {
-    const doc = getDocBySlug(params.slug)
+  loader: async ({ params }) => {
+    const doc = await getDocBySlug({ data: params.slug })
     if (!doc) throw notFound()
     return { doc }
   },

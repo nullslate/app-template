@@ -4,13 +4,16 @@ import { DocsSidebar } from "@/components/docs-sidebar"
 
 export const Route = createFileRoute("/docs")({
   component: DocsLayout,
-  loader: () => ({
-    docs: getAllDocs().map((d) => ({
-      slug: d.slug,
-      title: d.title,
-      headings: d.headings,
-    })),
-  }),
+  loader: async () => {
+    const allDocs = await getAllDocs()
+    return {
+      docs: allDocs.map((d) => ({
+        slug: d.slug,
+        title: d.title,
+        headings: d.headings,
+      })),
+    }
+  },
 })
 
 function DocsLayout() {

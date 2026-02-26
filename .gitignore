@@ -40,4 +40,4 @@ package-lock.json
 bun.lock
 .nitro/
 .output/
-docs/
+/docs/

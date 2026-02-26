@@ -27,6 +27,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
+    "entities": "6",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.477.0",
     "nitro": "npm:nitro-nightly@latest",

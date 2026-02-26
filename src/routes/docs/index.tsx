@@ -3,8 +3,8 @@ import { getAllDocs } from "@/lib/docs"
 
 export const Route = createFileRoute("/docs/")({
   component: DocsPage,
-  loader: () => ({
-    docs: getAllDocs(),
+  loader: async () => ({
+    docs: await getAllDocs(),
   }),
 })
 

@@ -1,4 +1,5 @@
 import matter from "gray-matter"
+import { createServerFn } from "@tanstack/react-start"
 
 export interface Heading {
   id: string
@@ -52,21 +53,30 @@ function parseDoc(filePath: string, raw: string): Doc {
   }
 }
 
-export function getAllDocs(): Doc[] {
+function getAllDocsInternal(): Doc[] {
   return Object.entries(mdxModules)
     .map(([path, raw]) => parseDoc(path, raw))
     .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
 }
 
-export function getDocBySlug(slug: string): Doc | null {
+function getDocBySlugInternal(slug: string): Doc | null {
   const key = `/content/docs/${slug}.mdx`
   const raw = mdxModules[key]
   if (!raw) return null
   return parseDoc(key, raw)
 }
 
-export function getDocSlugs(): string[] {
-  return Object.keys(mdxModules).map((path) =>
-    path.replace("/content/docs/", "").replace(/\.mdx$/, "")
-  )
-}
+export const getAllDocs = createServerFn({ method: "GET" }).handler(
+  async () => getAllDocsInternal()
+)
+
+export const getDocBySlug = createServerFn({ method: "GET" })
+  .inputValidator((slug: string) => slug)
+  .handler(async ({ data: slug }) => getDocBySlugInternal(slug))
+
+export const getDocSlugs = createServerFn({ method: "GET" }).handler(
+  async () =>
+    Object.keys(mdxModules).map((path) =>
+      path.replace("/content/docs/", "").replace(/\.mdx$/, "")
+    )
+)
