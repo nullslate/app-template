@@ -1,6 +1,6 @@
 {
   "name": "sandybridge-app-template",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "variables": {
     "project_name": {
       "description": "Name of the project",
@@ -12,32 +12,40 @@
       "description": "Include MDX documentation system",
       "default": false,
       "files": [
-        "app/docs/**/*",
+        "src/routes/docs/**/*",
         "content/docs/**/*",
-        "lib/docs.ts"
-      ]
-    },
-    "auth": {
-      "description": "Include next-auth authentication",
-      "default": true,
-      "files": [
-        "auth.ts",
-        "auth.config.ts",
-        "app/api/auth/**/*",
-        "components/session-provider.tsx",
-        "types/next-auth.d.ts"
+        "src/lib/docs.ts",
+        "src/lib/mdx-components.tsx",
+        "src/components/docs-sidebar.tsx",
+        "src/components/copyable-pre.tsx"
       ],
       "dependencies": {
-        "next-auth": "^5.0.0-beta.25",
-        "@auth/core": "^0.37.4",
-        "jose": "^6.0.11"
+        "@mdx-js/react": "^3.1.0",
+        "gray-matter": "^4.0.3"
+      },
+      "devDependencies": {
+        "@mdx-js/rollup": "^3.1.0",
+        "remark-frontmatter": "^5.0.0",
+        "remark-mdx-frontmatter": "^5.0.0"
+      }
+    },
+    "auth": {
+      "description": "Include Auth.js authentication",
+      "default": true,
+      "files": [
+        "src/lib/auth.ts",
+        "src/components/session-provider.tsx",
+        "api/auth/**/*"
+      ],
+      "dependencies": {
+        "@auth/core": "^0.37.4"
       }
     },
     "db": {
       "description": "Include PostgreSQL database setup",
-      "default": true,
+      "default": false,
       "files": [
-        "lib/db.ts"
+        "src/lib/db.ts"
       ],
       "dependencies": {
         "pg": "^8.14.1"
