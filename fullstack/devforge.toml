@@ -1,0 +1,22 @@
+env_files = [
+    { path = ".env", template = ".env.example" },
+]
+required_tools = ["docker", "cargo", "bun", "mprocs"]
+
+[docker]
+compose_file = "docker-compose.yml"
+
+[[docker.health_checks]]
+name = "postgres"
+cmd = ["docker", "compose", "exec", "-T", "postgres", "pg_isready", "-U", "{{project_name}}"]
+timeout = 30
+
+[dev]
+mprocs_config = "mprocs.yaml"
+
+[[dev.hooks]]
+cmd = "bun install"
+cwd = "web"
+
+[dev.hooks.condition]
+missing = "web/node_modules"

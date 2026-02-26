@@ -1,0 +1,5 @@
+procs:
+  api:
+    shell: "cargo run --package {{project_name}}-api"
+  web:
+    shell: "cd web && bun dev"

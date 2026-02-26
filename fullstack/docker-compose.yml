@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: "{{project_name}}"
+      POSTGRES_USER: "{{project_name}}"
+      POSTGRES_PASSWORD: "{{project_name}}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
