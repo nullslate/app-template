@@ -11,6 +11,10 @@
 # testing
 /coverage
 
+# next.js (legacy)
+/.next/
+next-env.d.ts
+
 # production
 /build
 

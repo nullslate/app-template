@@ -1,15 +1,15 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router"
 import { ArrowLeft } from "lucide-react"
-import { getDocBySlug } from "@/lib/docs"
+import { getDocBySlug, renderDocContent } from "@/lib/docs"
 import { MDXContent } from "@/components/mdx-content"
-import { docsMDXComponents } from "@/lib/mdx-components"
 
 export const Route = createFileRoute("/docs/$slug")({
   component: DocPage,
   loader: async ({ params }) => {
     const doc = await getDocBySlug({ data: params.slug })
     if (!doc) throw notFound()
-    return { doc }
+    const html = await renderDocContent({ data: doc.content })
+    return { doc, html }
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/docs/$slug")({
 })
 
 function DocPage() {
-  const { doc } = Route.useLoaderData()
+  const { doc, html } = Route.useLoaderData()
 
   return (
     <>
@@ -39,7 +39,7 @@ function DocPage() {
             <p className="text-muted-foreground">{doc.description}</p>
           )}
         </div>
-        <MDXContent source={doc.content} components={docsMDXComponents} />
+        <MDXContent html={html} />
       </div>
     </>
   )

@@ -1,5 +1,12 @@
 import matter from "gray-matter"
 import { createServerFn } from "@tanstack/react-start"
+import remarkGfm from "remark-gfm"
+import rehypeSlug from "rehype-slug"
+import rehypeShiki from "@shikijs/rehype"
+import rehypeStringify from "rehype-stringify"
+import remarkParse from "remark-parse"
+import remarkRehype from "remark-rehype"
+import { unified } from "unified"
 
 export interface Heading {
   id: string
@@ -80,3 +87,19 @@ export const getDocSlugs = createServerFn({ method: "GET" }).handler(
       path.replace("/content/docs/", "").replace(/\.mdx$/, "")
     )
 )
+
+async function renderMarkdown(content: string): Promise<string> {
+  const result = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeSlug)
+    .use(rehypeShiki, { theme: "github-dark" })
+    .use(rehypeStringify, { allowDangerousHtml: true })
+    .process(content)
+  return String(result)
+}
+
+export const renderDocContent = createServerFn({ method: "GET" })
+  .inputValidator((content: string) => content)
+  .handler(async ({ data: content }) => renderMarkdown(content))
