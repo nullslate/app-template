@@ -17,15 +17,14 @@ import { Toaster } from "@/components/toaster"
 import { Footer } from "@/components/footer"
 import { SessionProvider } from "@/components/session-provider"
 import { Button } from "@/components/ui/button"
-import "@/globals.css"
+import appCss from "@/globals.css?url"
 
-// FOUC prevention: reads theme/mode/font from localStorage/cookies and applies
-// data-* attributes before first paint. Uses only hardcoded string literals
-// (no user input), so inline script is safe.
+// FOUC prevention script - safe to inline: only reads from localStorage/cookies
+// using hardcoded string literals, sets data-* attributes on documentElement.
+// No user input is used. This is the standard pattern for theme FOUC prevention.
 const foucScript = `(function(){function c(k){var m=document.cookie.match(new RegExp("(?:^|; )"+k+"=([^;]*)"));return m?m[1]:null}var t=c("theme")||localStorage.getItem("theme")||"default";var mo=c("mode")||localStorage.getItem("mode");if(!mo){mo=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}var f=c("font")||localStorage.getItem("font")||"inter";document.documentElement.setAttribute("data-theme",t);document.documentElement.setAttribute("data-mode",mo);document.documentElement.setAttribute("data-font",f)})()`
 
 export const Route = createRootRoute({
-  component: RootLayout,
   errorComponent: ErrorComponent,
   notFoundComponent: NotFoundComponent,
   head: () => ({
@@ -35,39 +34,51 @@ export const Route = createRootRoute({
       { name: "darkreader-lock" },
       { title: "{{project_name}}" },
     ],
+    links: [
+      { rel: "stylesheet", href: appCss },
+    ],
+    scripts: [
+      // Safe inline script: only hardcoded string literals, no user input
+      { dangerouslySetInnerHTML: { __html: foucScript } },
+    ],
   }),
+  shellComponent: RootShell,
+  component: RootLayout,
 })
 
-function RootLayout() {
+function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
-        {/* Safe inline script: only reads from localStorage/cookies, sets data-* attrs */}
-        {/* eslint-disable-next-line react/no-danger */}
-        <script dangerouslySetInnerHTML={{ __html: foucScript }} />
       </head>
       <body className="flex min-h-dvh flex-col antialiased">
-        <SessionProvider>
-          <QueryProvider>
-            <ThemeProvider>
-              <FontProvider>
-                <Favicon />
-                <CommandPaletteProvider>
-                  <Navbar />
-                  <Toaster />
-                  <main className="flex flex-1 flex-col">
-                    <Outlet />
-                  </main>
-                  <Footer />
-                </CommandPaletteProvider>
-              </FontProvider>
-            </ThemeProvider>
-          </QueryProvider>
-        </SessionProvider>
+        {children}
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function RootLayout() {
+  return (
+    <SessionProvider>
+      <QueryProvider>
+        <ThemeProvider>
+          <FontProvider>
+            <Favicon />
+            <CommandPaletteProvider>
+              <Navbar />
+              <Toaster />
+              <main className="flex flex-1 flex-col">
+                <Outlet />
+              </main>
+              <Footer />
+            </CommandPaletteProvider>
+          </FontProvider>
+        </ThemeProvider>
+      </QueryProvider>
+    </SessionProvider>
   )
 }
 

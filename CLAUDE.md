@@ -1,8 +1,7 @@
 # App Template — Claude Code Instructions
 
 ## Stack
-- **Framework:** Vite + TanStack Router, TypeScript
-- **SSR:** Nitro v3 renderer
+- **Framework:** TanStack Start (Vite + TanStack Router + Nitro SSR), TypeScript
 - **Styling:** Tailwind CSS v4, shadcn/ui (New York style)
 - **Packages:** `@thesandybridge/themes` (theme CSS + runtime), `@thesandybridge/ui` (shared components)
 - **Auth:** `@auth/core` via Nitro API routes
@@ -27,12 +26,12 @@
 - No CSS modules — all styling via Tailwind utilities
 
 ## Routing
-- TanStack Router with file-based routing in `src/routes/`
-- `__root.tsx` — root layout (renders full `<html>` document for SSR)
+- TanStack Start with file-based routing in `src/routes/`
+- `__root.tsx` — root layout with `shellComponent` (html/head/body) + `component` (providers/content)
+- CSS loaded via `import appCss from "@/globals.css?url"` in `head.links`
 - `index.tsx` — index route for a directory
 - `$param.tsx` — dynamic route parameter
 - `route.tsx` — layout route (wraps child routes with `<Outlet />`)
-- No `'use client'` directives needed (everything is client-side in Vite)
 - Path alias: `@/` maps to `src/`
 
 ## Optional Features (template.json)
@@ -58,8 +57,7 @@ src/globals.css         — theme variable mapping + base styles
 src/components/         — all components
 src/components/ui/      — shadcn/ui primitives
 src/lib/                — utilities (auth, docs, icons, utils)
-src/entry-client.tsx    — client hydration entry
-src/entry-server.tsx    — SSR entry for Nitro renderer
+src/router.tsx          — TanStack Router instance (getRouter)
 api/                    — Nitro API routes (health, auth)
 content/docs/           — MDX documentation files
 vite.config.ts          — Vite + plugins config
