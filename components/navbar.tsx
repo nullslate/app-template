@@ -78,7 +78,7 @@ export function Navbar() {
             </kbd>
           </Button>
           <a
-            href="https://github.com/thesandybridge"
+            href="https://github.com/nullslate"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -112,7 +112,7 @@ export function Navbar() {
 
                 <div className="mt-auto flex items-center gap-4 pb-4 pt-4">
                   <a
-                    href="https://github.com/thesandybridge"
+                    href="https://github.com/nullslate"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"

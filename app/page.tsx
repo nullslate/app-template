@@ -44,7 +44,7 @@ export default function Home() {
           </Button>
           <Button variant="outline" asChild>
             <a
-              href="https://github.com/thesandybridge"
+              href="https://github.com/nullslate"
               target="_blank"
               rel="noopener noreferrer"
             >

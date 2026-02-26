@@ -14,7 +14,7 @@ export function Footer() {
               {"{{project_name}}"}
             </Link>
             <p className="text-muted-foreground mt-3 max-w-xs text-sm">
-              A sandybridge.io project.
+              A nullslate project.
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export function Footer() {
             <ul className="text-muted-foreground space-y-2 text-sm">
               <li>
                 <a
-                  href="https://github.com/thesandybridge"
+                  href="https://github.com/nullslate"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-foreground inline-flex items-center gap-2 transition-colors"
@@ -47,12 +47,12 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://sandybridge.io"
+                  href="https://github.com/nullslate"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors"
                 >
-                  sandybridge.io
+                  nullslate
                 </a>
               </li>
             </ul>
@@ -61,7 +61,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="text-muted-foreground mt-12 flex flex-col items-center justify-between gap-4 border-t border-border/50 pt-8 text-sm md:flex-row">
-          <p>&copy; {new Date().getFullYear()} sandybridge. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} nullslate. All rights reserved.</p>
           <p className="text-muted-foreground/60 text-xs">
             Built with Next.js
           </p>

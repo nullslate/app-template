@@ -1,6 +1,6 @@
 # {{project_name}}
 
-A sandybridge.io project built with Next.js.
+A nullslate project template.
 
 ## Getting Started
 
@@ -96,4 +96,4 @@ This project is configured for deployment on [Railway](https://railway.app/).
 
 ## Created With
 
-[create-sandybridge-app](https://github.com/thesandybridge/create-sandybridge-app)
+[nullslate](https://github.com/nullslate/cli)

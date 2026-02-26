@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "{{project_name}}",
     template: "%s | {{project_name}}",
   },
-  description: "A sandybridge.io project",
+  description: "A nullslate project",
 };
 
 export default function RootLayout({
